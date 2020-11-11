@@ -1,5 +1,5 @@
 input #firstname
-input //*[@name="userLastName"]
+input //div[contains(@class, "form-group second_class")]//input[contains(@name,  "userLastName")]
 input [class="form-control third"] or .form-control.third
-input //*[@qa_data="phoneOfUser"]
-input //*[@class="form-control second"]
+input //div[contains(@class, "form-group first_class")]//input[contains(@qa_data,  "phoneOfUser")]
+input //div[contains(@class, "form-group second_class")]//input[contains(@class,  "form-control second")]
