@@ -1,16 +1,5 @@
-1 поле для ввода - css-селектор, поиск по ID
 input #firstname
-
-2 поле для ввода - xpath-селектор, поиск по name
 input //*[@name="userLastName"]
-
-3 поле для ввода - css-селектор, поиск по class
-input [class="form-control third"] 
-or
-.form-control.third
-
-4 поле для ввода - xpath-селектор, поиск по вашему собственному атрибуту
+input [class="form-control third"] or .form-control.third
 input //*[@qa_data="phoneOfUser"]
-
-5 поле для ввода - xpath-селектор, поиск по class
 input //*[@class="form-control second"]
