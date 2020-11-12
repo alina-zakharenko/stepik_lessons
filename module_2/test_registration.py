@@ -8,15 +8,11 @@ try:
     browser.get(link)
 
     # Ваш код, который заполняет обязательные поля
-    input1 = browser.find_element_by_xpath(
-    "//div[contains(@class, 'first_block')]/div[contains(@class,'form-group first_class')]/input")
-    # ("//input[contains(@placeholder, \"Input your first name\")]")
+    input1 = browser.find_element_by_xpath("//input[contains(@placeholder, \"Input your first name\")]")
     input1.send_keys("Ivan")
-    input2 = browser.find_element_by_xpath("//div[contains(@class,'container')]//div[contains(@class, 'first_block')]/div[contains(@class,'form-group second_class')]/input")
+    input2 = browser.find_element_by_xpath("//input[contains(@placeholder, 'Input your last name')]")
     input2.send_keys("Petrov")
     input3 = browser.find_element_by_xpath("//input[contains(@placeholder, 'Input your email')]")
-    # ("//div[contains(@class, 'first_block')]/div[contains(@class,'form-group third_class')]/input")
-
     input3.send_keys("Smolensk@ru")
 
     # Проверяем, что форма заполнилась значениями
