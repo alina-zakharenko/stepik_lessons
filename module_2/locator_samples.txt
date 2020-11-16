@@ -1,5 +1,5 @@
-input #firstname
-input //input[contains(@name,  "userLastName")]
-input [class="form-control third"] or .form-control.third
-input //input[contains(@qa_data,  "phoneOfUser")]
-input //input[contains(@class,  "form-control second")]
+input.find_element_by_id ('firstname')
+input.find_element_by_xpath ("//input[contains(@name,  'userLastName')]")
+input.find_element_by_css_selector ('.form-control.third')
+input.find_element_by_xpath ("//input[contains(@qa_data,  'phoneOfUser')]")
+input.find_element_by_xpath ("//input[contains(@class,  'form-control second')]")
