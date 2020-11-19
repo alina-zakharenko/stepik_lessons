@@ -12,8 +12,6 @@ def add_book_to_basket():
     check_basket_button = "//p//a[contains(text(),'Посмотреть корзину')]"
     checkout_button = "//p//a[contains(text(),'Оформить')]"
 
-    book_name = "Ariel"
-
 
     try:
         # Arrange
