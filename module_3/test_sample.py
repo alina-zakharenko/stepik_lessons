@@ -51,7 +51,6 @@ def add_book_to_basket():
         check_checkout_button_text = browser.find_element_by_xpath("//p//a[contains(text(),'Оформить')]")
         assert checkout_basket_button_text in check_checkout_button_text.text, "Неверное имя кнопки оформления заказа"
 
-
     finally:
         time.sleep(5)
         browser.quit()
