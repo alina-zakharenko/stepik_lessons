@@ -1,55 +1,50 @@
+#Тест Добавление одного товара в корзину
+#Предусловия: Пользователь находится в разделе "Fiction",
+#Проверка: выбранный товар есть на складе
+#Шаг 1  пользователь добавляет первую книгу в корзину, нажатием на кнопку "В корзину"
+#Ожидаемый результат: товар добавлен в корзину; пользователь может посмотреть корзину, нажав на кнопку "Посмотреть корзину" или начать оформление, нажав кнопку "Оформить"
+#Проверка: Сообщение о добавленном товаре (Ariel был добавлен в вашу корзину.), сообщение о стоимости корзины (Стоимость корзины теперь составляет 26,99
+
 from selenium import webdriver
 import time
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
+#Main data
+catalog_fiction_section_link = "http://selenium1py.pythonanywhere.com/ru/catalogue/category/books/fiction_3/"
+common_product_locator = "//article[contains(@class,'product_pod')]"
+
 
 def add_book_to_basket():
-    # Data
-    main_page_link = "http://selenium1py.pythonanywhere.com/ru/catalogue/category/books/fiction_3/"
-    in_storage = "// p[contains( @class ,'instock availability')] // i[contains( @ class, 'icon-ok')]"
-    add_to_basket = "//div[contains(@class, 'product_price')]//form[contains(@action, '/ru/basket/add/97/')]"
-    check_book_name = "//strong[contains(text(),'Ariel')]"
-    check_deferred_benefit_offer = "//strong[contains(text(),'Deferred benefit offer')]"
-    check_basket_price = "//strong[contains(text(),'26,99')]"
-    check_basket_button = "//p//a[contains(text(),'Посмотреть корзину')]"
-    checkout_button = "//p//a[contains(text(),'Оформить')]"
-    #//div[contains(@class, 'container-fluid.page')]
-    add_to_basket_text = "был добавлен в вашу корзину"
-    meet_condition_text = "Ваша корзина удовлетворяет условиям предложения"
-    price_text = "Стоимость корзины теперь составляет "
-    basket_button_text = "Посмотреть корзину"
-    checkout_basket_button_text = "Оформить"
+    # Test Data
+    product_name = "Ariel"
+    product_locator = "{}[contains(text(), '{}')]".format(common_product_locator, product_name)
+    expected_message_text = "Товар {} добавлен в корзину".format(product_name)
 
 
     try:
         # Arrange
         browser = webdriver.Chrome()
         browser.implicitly_wait(5)
-        browser.get(main_page_link)
-        browser.find_element_by_xpath(in_storage)
+        browser.get(catalog_fiction_section_link)
 
         # Act
-        browser.find_element_by_xpath(add_to_basket).click()
+        product = browser.find_element_by_xpath(product_locator)
+        product.find_element_by_xpath("//button[contains(@type,'submit')]").click()
+
 
         # Assert
-        browser.find_element_by_xpath(check_book_name)
-        check_add_to_basket_text = browser.find_element_by_xpath("//div[contains(@class,'alertinner ')]")
-        assert add_to_basket_text in check_add_to_basket_text.text, "Неверный текст о добавлении товара в корзину"
-
-        browser.find_element_by_xpath(check_deferred_benefit_offer)
-        check_meet_condition_text = browser.find_element_by_css_selector("div.alert.alert-safe.alert-noicon.alert-success.fade.in:nth-child(2)")
-        assert meet_condition_text in check_meet_condition_text.text, "Неверный текст об удовлетворении условиям предложения"
-
-        browser.find_element_by_xpath(check_basket_price)
-        check_price_text = browser.find_element_by_xpath("//div[contains(@class,'alertinner ')]//p[contains(text(),'Стоимость')]")
-        assert price_text in check_price_text.text, "Неверный текст о стоимости корзины"
+        result_message_text = browser.find_element_by_xpath("//strong[contains(text(),'Ariel')]").text
+        assert result_message_text in expected_message_text, "Product should be added, but it doesn't"
 
 
-        browser.find_element_by_xpath(check_basket_button)
-        check_basket_button_text =browser.find_element_by_xpath("//p//a[contains(text(),'Посмотреть корзину')]")
-        assert basket_button_text in check_basket_button_text.text, "Неверное имя кнопки"
+        notifications_block = browser.find_element_by_css_selector("div#messages")
+        basket_notification = notifications_block.find_element_by_css_selector("div.alert-info")
+        basket_button = basket_notification.find_element_by_css_selector("a[href='/ru/basket/']")
+        WebDriverWait(browser, 5).until(EC.element_to_be_clickable((basket_button, "Оформить")))
+        checkout_button = basket_notification.find_element_by_css_selector("a[href='/ru/checkout/']")
+        WebDriverWait(browser, 5).until(EC.element_to_be_clickable((checkout_button, "Оформить")))
 
-        browser.find_element_by_xpath(checkout_button)
-        check_checkout_button_text = browser.find_element_by_xpath("//p//a[contains(text(),'Оформить')]")
-        assert checkout_basket_button_text in check_checkout_button_text.text, "Неверное имя кнопки оформления заказа"
 
     finally:
         time.sleep(5)
