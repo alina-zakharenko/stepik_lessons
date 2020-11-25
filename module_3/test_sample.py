@@ -10,13 +10,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 
-#Main data
+# MainData
 catalog_fiction_section_link = "http://selenium1py.pythonanywhere.com/ru/catalogue/category/books/fiction_3/"
 common_product_locator = "//article[contains(@class,'product_pod')]"
 
 
 def add_book_to_basket():
-    # Test Data
+
+    # TestData
     browser = webdriver.Chrome()
     product_name = "Ariel"
     product_locator = "{}[contains(., '{}')]".format(common_product_locator, product_name)
@@ -29,7 +30,7 @@ def add_book_to_basket():
         browser.implicitly_wait(5)
         browser.get(catalog_fiction_section_link)
 
-        #Вспомогательная проверка: товар находится на складе
+        # Вспомогательная проверка: товар находится на складе
         in_stock_locator = browser.find_element_by_xpath("//p[contains(@class,'instock availability')]").text
         in_stock_actual_text = "Товар находится {}".format(in_stock_locator)
         in_stock_actual_text in in_stock_expected_text
