@@ -24,9 +24,6 @@ def add_book_to_basket():
 
     in_stock_expected_text = "На складе"
 
-
-
-
     try:
         # Arrange
         browser.implicitly_wait(5)
