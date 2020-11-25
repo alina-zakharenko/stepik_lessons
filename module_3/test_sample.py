@@ -23,7 +23,7 @@ def add_book_to_basket():
     product_locator = "{}[contains(., '{}')]".format(common_product_locator, product_name)
     add_to_basket_expected_message_text = "{} был добавлен в вашу корзину.".format(product_name)
 
-    in_stock_expected_text = "На складе"
+    in_stock_expected_text = "Товар находится На складе"
 
     try:
         # Arrange
@@ -33,7 +33,7 @@ def add_book_to_basket():
         # Вспомогательная проверка: товар находится на складе
         in_stock_locator = browser.find_element_by_xpath("//p[contains(@class,'instock availability')]").text
         in_stock_actual_text = "Товар находится {}".format(in_stock_locator)
-        in_stock_actual_text in in_stock_expected_text
+        print(in_stock_actual_text in in_stock_expected_text)
 
 
         # Act
