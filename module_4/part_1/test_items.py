@@ -1,10 +1,5 @@
-import time
-
-link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
-
-
 def test_items(browser):
-
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
     try:
         #Arrange
         browser.get(link)
@@ -18,7 +13,6 @@ def test_items(browser):
 
         #Assert
         assert basket_button_actual_text in basket_button_expected_text, "Please, check browser language"
-        time.sleep(10)
 
     finally:
         browser.quit()
