@@ -14,7 +14,7 @@ from selenium import webdriver
 #дождаться фидбека о том, что ответ правильный
 #проверить, что текст в опциональном фидбеке полностью совпадает с "Correct!"
 
-answer = str(math.log(int(time.time())))
+
 
 
 @pytest.fixture()
@@ -25,8 +25,7 @@ def browser():
     yield browser
     browser.quit()
 
-#, "236896","236897","236898","236899","236903","236904","236905"
-@pytest.mark.parametrize('pagenumber', ["236895", "236896"])
+@pytest.mark.parametrize('pagenumber', ["236895", "236896","236897","236898","236899","236903","236904","236905"])
 
 def test_parametrize(browser, pagenumber):
     # открыть страницу
@@ -34,7 +33,8 @@ def test_parametrize(browser, pagenumber):
     browser.get(link)
 
     # ввести правильный ответ
-    input=browser.find_element_by_css_selector('textarea')
+    answer = str(math.log(int(time.time())))
+    input = browser.find_element_by_css_selector('textarea')
     input.send_keys(answer)
     time.sleep(5)
 
