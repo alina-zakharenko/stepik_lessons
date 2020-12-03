@@ -2,34 +2,25 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-#user_language = 'ru', 'en-GB', 'es', 'fr'
-#options = Options()
-#options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
-#browser = webdriver.Chrome(options=options)
 
 def pytest_addoption(parser):
-    parser.addoption('--language', action='store', default=None, help="Choose browser language: 'ru', 'en-GB', 'es', 'fr'")
+    parser.addoption('--language', action='store', default='en-GB', help="Choose browser language: 'ru', 'en-GB', 'es', 'fr'")
 
 
 @pytest.fixture(scope="function")
 def browser(request):
-    user_language = request.config.getoption("language")
-    options = Options()
-    options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
-    if user_language == "ru":
-        print("\nstart chrome browser for test..")
+    language = request.config.getoption("language")
+
+    if language in ["ru",'en-GB', 'es', 'fr']:
+        options = Options()
+        options.add_experimental_option('prefs', {'intl.accept_languages': language})
         browser = webdriver.Chrome(options=options)
-    elif user_language == "en-GB":
-        print("\nstart firefox browser for test..")
-        browser = webdriver.Chrome(options=options)
-    elif user_language == "es":
-        print("\nstart firefox browser for test..")
-        browser = webdriver.Chrome(options=options)
-    elif user_language == "fr":
-        print("\nstart firefox browser for test..")
-        browser = webdriver.Chrome(options=options)
+        browser.maximize_window()
+        browser.implicitly_wait(5)
+        browser.user_language = language
 
     else:
         raise pytest.UsageError("browser language must be in range of: 'ru', 'en-GB', 'es', 'fr'")
+
     yield browser
     browser.quit()
