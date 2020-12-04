@@ -19,9 +19,9 @@ def test_new_user_registration(browser):
     password_reinput_field_locator = "id_registration-password2"
     reg_btn_locator = "//button[contains(@value,'Register')]"
     search_title_locator = ".alertinner.wicon"
-
     expected_welcome_text = "Thanks for registering!"
 
+    fake = Faker()
 
     # Arrange
     browser.implicitly_wait(5)
@@ -31,7 +31,6 @@ def test_new_user_registration(browser):
     button = browser.find_element_by_id("login_link")
     button.click()
     email_input_field = browser.find_element_by_id(email_input_field_locator)
-    fake = Faker()
     email_input_field.send_keys(fake.email())
     password_input_field = browser.find_element_by_id(password_input_field_locator)
     password_input_field.send_keys("Start123+")
