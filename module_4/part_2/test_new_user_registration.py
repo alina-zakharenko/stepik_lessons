@@ -1,5 +1,6 @@
 import pytest
 from selenium import webdriver
+from faker import Faker
 
 @pytest.fixture(autouse=True)
 def browser():
@@ -29,9 +30,9 @@ def test_new_user_registration(browser):
     # Act
     button = browser.find_element_by_id("login_link")
     button.click()
-
     email_input_field = browser.find_element_by_id(email_input_field_locator)
-    email_input_field.send_keys("TesterTest17@gmail.com")
+    fake = Faker()
+    email_input_field.send_keys(fake.email())
     password_input_field = browser.find_element_by_id(password_input_field_locator)
     password_input_field.send_keys("Start123+")
     password_reinput_field = browser.find_element_by_id(password_reinput_field_locator)
