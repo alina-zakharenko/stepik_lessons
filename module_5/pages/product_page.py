@@ -9,6 +9,9 @@ class ProductPage(BasePage):
     def should_be_product_page(self):
         #self.should_be_login_url()
         self.should_be_add_btn()
+        self.add_to_basket()
+        self.should_not_be_success_message()
+        self.disappear_of_success_message()
 
     def should_be_login_url(self):
         # проверка на корректный url адрес
@@ -27,32 +30,22 @@ class ProductPage(BasePage):
         assert True
 
 
-#    def check_product_name(self):
-#        expected_product_name_dict = {"The shellcoder's handbook", "Coders at Work"}
-#        expected_product_name = self.browser.find_element(By.CSS_SELECTOR, ".alert:nth-child(1) strong").text
-#        #return expected_product_name
-#        assert expected_product_name in expected_product_name_dict
+    def check_add_to_basket_notification(self, expected_product_name, expected_notification_template):
+        expected_notification_text = expected_notification_template.format(expected_product_name)
+        actual_notification_text = self.browser.find_element(By.CSS_SELECTOR, ".alert:nth-child(1) .alertinner").text
+        print("Actual product name is " + actual_notification_text, "Expected product name is " + expected_notification_text)
+        assert actual_notification_text == expected_notification_text
 
-#    def check_add_to_basket_notification(self, expected_product_name, notification_template):
-#        # product_name = "The shellcoder's handbook"
-#        expected_notification_text = notification_template.format(expected_product_name)
-#        actual_notification_text = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET_NOTIFICATION).text
-#        assert expected_notification_text == actual_notification_text, "wrong template for add_to_basket notification is used"
-
-    def check_product_name(self):
-        actual_product_name = self.browser.find_element(By.CSS_SELECTOR, ".alert:nth-child(1) strong").text
-        expected_product_name = self.browser.find_element(By.CSS_SELECTOR, "h1").text
-        print("Actual product name is " + actual_product_name, "Expected product name is " + expected_product_name)
-        assert actual_product_name == expected_product_name
-
-    def check_product_price(self):
+    def check_product_and_basket_price(self, expected_product_price):
         actual_product_price = self.browser.find_element(By.CSS_SELECTOR, ".alertinner>p>strong").text
-        expected_product_price = self.browser.find_element(By.CSS_SELECTOR, ".price_color:nth-child(2)").text
         print("Actual product price is " + actual_product_price, "Expected product price is " + expected_product_price)
         assert actual_product_price == expected_product_price
 
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should not be"
 
-
-
-
+    def disappear_of_success_message(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message isn't disappear"
 
