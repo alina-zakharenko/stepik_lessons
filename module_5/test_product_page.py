@@ -42,7 +42,7 @@ class TestProductPage:
         page.check_product_and_basket_price(basket_total_price)
 
     @pytest.mark.xfail(reason="fixing this bug right now")
-    def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
+    def test_guest_cant_see_success_message_after_adding_product_to_basket(self,browser):
         # Data
         link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
         # Arrange
@@ -53,7 +53,7 @@ class TestProductPage:
         # Assert
         page.should_not_be_success_message()
 
-    def test_guest_cant_see_success_message(browser):
+    def test_guest_cant_see_success_message(self, browser):
         # Data
         link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
         # Arrange
@@ -64,7 +64,7 @@ class TestProductPage:
         page.should_not_be_success_message()
 
     @pytest.mark.xfail(reason="fixing this bug right now")
-    def test_message_disappeared_after_adding_product_to_basket(browser):
+    def test_message_disappeared_after_adding_product_to_basket(self, browser):
         # Data
         link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
         # Arrange
@@ -75,7 +75,7 @@ class TestProductPage:
         # Assert
         page.disappear_of_success_message()
 
-    def test_guest_should_see_login_link_on_product_page(browser):
+    def test_guest_should_see_login_link_on_product_page(self, browser):
         #Arrange
         link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
         page = ProductPage(browser, link)
@@ -84,7 +84,7 @@ class TestProductPage:
         #Assert
         page.should_be_login_link()
 
-    def test_guest_can_go_to_login_page_from_product_page(browser):
+    def test_guest_can_go_to_login_page_from_product_page(self, browser):
         #Arrange
         link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
         page = ProductPage(browser, link)
@@ -123,7 +123,7 @@ class TestUserAddToBasketFromProductPage:
         page.should_be_authorized_user()
         self.browser = browser
 
-    def test_user_cant_see_success_message(browser):
+    def test_user_cant_see_success_message(self, browser):
         # Data
         link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
         # Arrange
@@ -133,7 +133,7 @@ class TestUserAddToBasketFromProductPage:
         # Assert
         page.should_not_be_success_message()
 
-    def test_user_can_add_product_to_basket(self, browser, link):
+    def test_user_can_add_product_to_basket(self, browser):
         # Data
         link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
         product_name = "Coders at Work"
