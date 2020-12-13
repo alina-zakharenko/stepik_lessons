@@ -25,6 +25,6 @@ class BasePageLocators():
 
 
 class BasketPageLocators():
-    BASKET_EMPTY_TXT=(By.CSS_SELECTOR, "#content_inner p")
-
+    BASKET_EMPTY_MSG=(By.CSS_SELECTOR, "#content_inner p")
+    ITEMS_IN_BASKET_MSG = (By.CSS_SELECTOR, ".basket-title .col-sm-6")
 
