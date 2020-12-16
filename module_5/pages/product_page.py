@@ -13,10 +13,10 @@ class ProductPage(BasePage):
         self.should_not_be_success_message()
         self.disappear_of_success_message()
 
-    def should_be_login_url(self):
+    #def should_be_login_url(self):
         # проверка на корректный url адрес
-        assert "?promo=newYear" in self.browser.current_url, "String '?promo=newYear' is not in current url of browser"
-        assert True
+    #    assert "?promo=newYear" in self.browser.current_url, "String '?promo=newYear' is not in current url of browser"
+    #    assert True
 
     def should_be_add_btn(self):
         # проверка, что есть кнопка добавленияв корзину
