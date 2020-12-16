@@ -1,0 +1,6 @@
+
+start chrome browser for test..
+No second alert presented
+Actual product name is Coders at Work book has been added to your basket. Expected product name is Coders at Work has been added to your basket.
+
+quit browser..
