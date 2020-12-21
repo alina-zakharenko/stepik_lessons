@@ -1,4 +1,5 @@
 import math
+import time
 
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.common.exceptions import NoAlertPresentException
@@ -22,9 +23,11 @@ class BasePage():
         link = self.browser.find_element(*BasePageLocators.CATALOG_GOODS_LINK)
         link.click()
 
-    def go_to_fiction_section_page(self):
+    def go_to_fiction_section_page(self, timeout=5):
         link = self.browser.find_element(*BasePageLocators.FICTION_SECTION_LINK)
+        self.browser.implicitly_wait(timeout)
         link.click()
+
 
     def __init__(self, browser, url, timeout=10):
         self.browser = browser

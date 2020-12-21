@@ -114,12 +114,13 @@ class TestProductPage:
 
     def test_guest_can_add_product_to_basket_from_fiction_section(self, browser):
         # Data
-        link = "http://selenium1py.pythonanywhere.com/ru/catalogue/category/books/fiction_3/"
-        product_name = "Ariel"
-        template = "{} has been added to your basket."
-        basket_total_price = "£26,99"
+        link = "http://selenium1py.pythonanywhere.com/en-gb/"
+        #product_name = "Ariel"
+        #template = "{} has been added to your basket."
+        #basket_total_price = "£26,99"
         # Arrange
         page = BasePage(browser, link)
+        page.open()
         page.go_to_all_goods_section_page()
         page.go_to_fiction_section_page()
 

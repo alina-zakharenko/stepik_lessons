@@ -38,8 +38,8 @@ class BasePageLocators():
     LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
     BASKET_LINK = (By.CSS_SELECTOR,".btn-group")
     USER_ICON = (By.CSS_SELECTOR, ".icon-user")
-    CATALOG_GOODS_LINK = (By.CSS_SELECTOR, "href='/ru/catalogue/'")
-    FICTION_SECTION_LINK = (By.CSS_SELECTOR, "href$='fiction_3/'")
+    CATALOG_GOODS_LINK = (By.CSS_SELECTOR, "[href$='/catalogue/']")
+    FICTION_SECTION_LINK = (By.CSS_SELECTOR, ".nav-list > li > ul > li:nth-child(1)")
 
 
 class BasketPageLocators():
