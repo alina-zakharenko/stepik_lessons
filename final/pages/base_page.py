@@ -12,8 +12,8 @@ from .locators import BasePageLocators
 class BasePage():
 
     def go_to_login_page(self):
-       link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
-       link.click()
+        link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
+        link.click()
 
     def go_to_basket_page(self):
         link = self.browser.find_element(*BasePageLocators.BASKET_LINK)
@@ -24,10 +24,10 @@ class BasePage():
         link.click()
 
     def go_to_fiction_section_page(self, timeout=5):
-        link = self.browser.find_element(*BasePageLocators.FICTION_SECTION_LINK)
+        self.browser.find_element(*BasePageLocators.FICTION_SECTION_LINK)
+        catalog_fiction_section_link = "http://selenium1py.pythonanywhere.com/ru/catalogue/category/books/fiction_3/"
         self.browser.implicitly_wait(timeout)
-        link.click()
-
+        self.browser.get(catalog_fiction_section_link)
 
     def __init__(self, browser, url, timeout=10):
         self.browser = browser
@@ -44,7 +44,7 @@ class BasePage():
     def is_disappeared(self, how, what, timeout=4):
         try:
             WebDriverWait(self.browser, timeout, 1, TimeoutException). \
-                    until_not(EC.presence_of_element_located((how, what)))
+                until_not(EC.presence_of_element_located((how, what)))
         except TimeoutException:
             return False
         return True
@@ -79,6 +79,3 @@ class BasePage():
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
-
-
-

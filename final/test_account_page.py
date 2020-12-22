@@ -23,7 +23,7 @@ class TestUserCanGoToAccountPage:
         # Data
         link = "http://selenium1py.pythonanywhere.com/en-gb/"
         # Arrange
-        page = AccountPage(browser,link)
+        page = AccountPage(browser, link)
         # Act
         page.open()
         # Assert
@@ -33,12 +33,9 @@ class TestUserCanGoToAccountPage:
         # Data
         link = "http://selenium1py.pythonanywhere.com/en-gb/accounts/profile/"
         # Arrange
-        page = AccountPage(browser,link)
+        page = AccountPage(browser, link)
         # Act
         page.open()
         # Assert
         page.go_to_account_page()
         page.edit_user_profile("TestFN", "TestLN")
-
-
-

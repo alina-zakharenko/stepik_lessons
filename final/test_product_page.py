@@ -7,6 +7,11 @@ from .pages.base_page import BasePage
 import pytest
 import time
 
+from selenium import webdriver
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+
 
 class TestProductPage:
 
@@ -115,14 +120,45 @@ class TestProductPage:
     def test_guest_can_add_product_to_basket_from_fiction_section(self, browser):
         # Data
         link = "http://selenium1py.pythonanywhere.com/en-gb/"
-        #product_name = "Ariel"
-        #template = "{} has been added to your basket."
-        #basket_total_price = "£26,99"
+        common_product_locator = "//article[contains(@class,'product_pod')]"
+        product_name = "Ariel"
+        product_locator = "{}[contains(., '{}')]".format(common_product_locator, product_name)
+        add_to_basket_expected_message_text = "{} был добавлен в вашу корзину.".format(product_name)
+
         # Arrange
         page = BasePage(browser, link)
         page.open()
         page.go_to_all_goods_section_page()
         page.go_to_fiction_section_page()
+        product = page.browser.find_element_by_xpath(product_locator)
+        product.find_element_by_css_selector('.col-xs-6:nth-child(1) .btn').click()
+
+        # Assert
+        # Assert
+        # Проверка: сообщение о добавленном товаре
+        add_to_basket_actual_message_text = browser.find_element_by_xpath(
+            "//strong[contains(text(), 'Ariel')]/parent::div").text
+        print("add_to_basket_result_message_text: " + add_to_basket_actual_message_text)
+        print("add_to_basket_expected_message_text: " + add_to_basket_expected_message_text)
+        assert add_to_basket_actual_message_text in add_to_basket_expected_message_text, "Product should be added, but it doesn't"
+
+        # Проверка: сообщение о стоимости корзины
+        product_price_locator = browser.find_element_by_xpath(
+            "//div[contains(@class, 'alert-info')]/child::div/p/strong").text
+        basket_price_expected_message_text = "Стоимость корзины теперь составляет {}".format(product_price_locator)
+        basket_price_actual_message_text = browser.find_element_by_xpath(
+            "//div[contains(@class, 'alert-info')]/child::div/p").text
+        print("basket_price_actual_message_text: " + basket_price_actual_message_text)
+        print("basket_price_expected_message_text: " + basket_price_expected_message_text)
+        assert basket_price_actual_message_text in basket_price_expected_message_text, "Please, check product price"
+
+        # Проверка: наличие кнопок "Посмотреть корзину" и "Оформить"
+        notifications_block = browser.find_element_by_css_selector("div#messages")
+        basket_notification = notifications_block.find_element_by_css_selector("div.alert-info")
+        basket_notification.find_element_by_css_selector("a[href='/ru/basket/']")
+        WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.LINK_TEXT, "Посмотреть корзину")))
+        basket_notification.find_element_by_css_selector("a[href='/ru/checkout/']")
+        WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.LINK_TEXT, "Оформить")))
 
 
 class TestUserAddToBasketFromProductPage:
@@ -164,5 +200,3 @@ class TestUserAddToBasketFromProductPage:
         # Assert
         page.check_add_to_basket_notification(product_name, template)
         page.check_product_and_basket_price(basket_total_price)
-
-
