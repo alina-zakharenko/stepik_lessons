@@ -1,16 +1,9 @@
-from selenium.webdriver.common.by import By
-
 from .pages.basket_page import BasketPage
 from .pages.login_page import LoginPage
 from .pages.product_page import ProductPage
 from .pages.base_page import BasePage
 import pytest
 import time
-
-from selenium import webdriver
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
 
 
 class TestProductPage:
@@ -23,11 +16,10 @@ class TestProductPage:
                               "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer4",
                               "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer5",
                               "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer6",
-                              "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7",
+                              "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7"
                               "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
-                              "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"])
-    # "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear"
-
+                              "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"
+                              ])
     @pytest.mark.xfail(reason="Задание: независимость контента, ищем баг")
     def test_guest_can_add_product_to_basket(self, browser, link):
         # Data
@@ -48,49 +40,6 @@ class TestProductPage:
         # Assert
         page.check_add_to_basket_notification(product_name, template)
         page.check_product_and_basket_price(basket_total_price)
-
-    @pytest.mark.xfail(reason="fixing this bug right now")
-    def test_guest_cant_see_success_message_after_adding_product_to_basket(self, browser):
-        # Data
-        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
-        # Arrange
-        page = ProductPage(browser, link)
-        # Act
-        page.open()
-        page.add_to_basket()
-        # Assert
-        page.should_not_be_success_message()
-
-    def test_guest_cant_see_success_message(self, browser):
-        # Data
-        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
-        # Arrange
-        page = ProductPage(browser, link)
-        # Act
-        page.open()
-        # Assert
-        page.should_not_be_success_message()
-
-    @pytest.mark.xfail(reason="fixing this bug right now")
-    def test_message_disappeared_after_adding_product_to_basket(self, browser):
-        # Data
-        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
-        # Arrange
-        page = ProductPage(browser, link)
-        # Act
-        page.open()
-        page.add_to_basket()
-        # Assert
-        page.disappear_of_success_message()
-
-    def test_guest_should_see_login_link_on_product_page(self, browser):
-        # Arrange
-        link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
-        page = ProductPage(browser, link)
-        # Act
-        page.open()
-        # Assert
-        page.should_be_login_link()
 
     def test_guest_can_go_to_login_page_from_product_page(self, browser):
         # Arrange
@@ -123,7 +72,8 @@ class TestProductPage:
         common_product_locator = "//article[contains(@class,'product_pod')]"
         product_name = "Ariel"
         product_locator = "{}[contains(., '{}')]".format(common_product_locator, product_name)
-        add_to_basket_expected_message_text = "{} был добавлен в вашу корзину.".format(product_name)
+        template = "{} был добавлен в вашу корзину.".format(product_name)
+        expected_product_price = "26,99 £"
 
         # Arrange
         page = BasePage(browser, link)
@@ -134,31 +84,8 @@ class TestProductPage:
         product.find_element_by_css_selector('.col-xs-6:nth-child(1) .btn').click()
 
         # Assert
-        # Assert
-        # Проверка: сообщение о добавленном товаре
-        add_to_basket_actual_message_text = browser.find_element_by_xpath(
-            "//strong[contains(text(), 'Ariel')]/parent::div").text
-        print("add_to_basket_result_message_text: " + add_to_basket_actual_message_text)
-        print("add_to_basket_expected_message_text: " + add_to_basket_expected_message_text)
-        assert add_to_basket_actual_message_text in add_to_basket_expected_message_text, "Product should be added, but it doesn't"
-
-        # Проверка: сообщение о стоимости корзины
-        product_price_locator = browser.find_element_by_xpath(
-            "//div[contains(@class, 'alert-info')]/child::div/p/strong").text
-        basket_price_expected_message_text = "Стоимость корзины теперь составляет {}".format(product_price_locator)
-        basket_price_actual_message_text = browser.find_element_by_xpath(
-            "//div[contains(@class, 'alert-info')]/child::div/p").text
-        print("basket_price_actual_message_text: " + basket_price_actual_message_text)
-        print("basket_price_expected_message_text: " + basket_price_expected_message_text)
-        assert basket_price_actual_message_text in basket_price_expected_message_text, "Please, check product price"
-
-        # Проверка: наличие кнопок "Посмотреть корзину" и "Оформить"
-        notifications_block = browser.find_element_by_css_selector("div#messages")
-        basket_notification = notifications_block.find_element_by_css_selector("div.alert-info")
-        basket_notification.find_element_by_css_selector("a[href='/ru/basket/']")
-        WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.LINK_TEXT, "Посмотреть корзину")))
-        basket_notification.find_element_by_css_selector("a[href='/ru/checkout/']")
-        WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.LINK_TEXT, "Оформить")))
+        page.check_add_to_basket_notification_from_base_page(product_name, template)
+        page.check_product_and_basket_price_from_base_page(expected_product_price)
 
 
 class TestUserAddToBasketFromProductPage:
@@ -184,9 +111,10 @@ class TestUserAddToBasketFromProductPage:
         # Assert
         page.should_not_be_success_message()
 
-    def test_user_can_add_product_to_basket(self, browser):
+    @pytest.mark.xfail(reason="Необходимо имплементировать уникальный локатор")
+    def test_user_can_add_product_to_basket_from_non_fiction_section(self, browser):
         # Data
-        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+        link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/category/books/non-fiction_5/"
         product_name = "Coders at Work"
         template = "{} has been added to your basket."
         basket_total_price = "£19.99"

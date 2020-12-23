@@ -5,8 +5,8 @@ from selenium.webdriver.chrome.options import Options
 
 
 def pytest_addoption(parser):
-    parser.addoption('--browser', action='store', default="chrome", help="Choose browser: chrome or firefox")
-    parser.addoption('--language', action='store', default='en',
+    parser.addoption('--browser_name', action='store', default="chrome", help="Choose browser: chrome or firefox")
+    parser.addoption('--language', action='store', default='en-GB',
                      help="Choose browser language: 'ru', 'en-GB', 'es', 'fr'")
 
 
@@ -14,7 +14,7 @@ def pytest_addoption(parser):
 def browser(request):
     language = request.config.getoption("language")
 
-    if language in ["ru", 'en', 'es', 'fr']:
+    if language in ["ru", 'en-GB', 'es', 'fr']:
         options = Options()
         options.add_experimental_option('prefs', {'intl.accept_languages': language})
         browser = webdriver.Chrome(options=options)
@@ -23,13 +23,11 @@ def browser(request):
         browser.user_language = language
 
     else:
-        raise pytest.UsageError("browser language must be in range of: 'ru', 'en', 'es', 'fr'")
+        raise pytest.UsageError("browser language must be in range of: 'ru', 'en-GB', 'es', 'fr'")
 
-    browser_name = request.config.getoption("browser")
+    browser_name = request.config.getoption("browser_name")
     if browser_name == "chrome":
         print("\nstart chrome browser for test..")
-        browser = webdriver.Chrome()
-        browser.maximize_window()
     else:
         print("Browser {} still is not implemented".format(browser_name))
     yield browser

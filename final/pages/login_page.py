@@ -2,8 +2,9 @@ from .base_page import BasePage
 from .locators import LoginPageLocators
 from .locators import AccountPageLocators
 
+
 class LoginPage(BasePage):
-    def login_user(self,email, password):
+    def login_user(self, email, password):
         email_form = self.browser.find_element(*LoginPageLocators.EMAIL_INPUT_FORM_FOR_REG_USER)
         email_form.send_keys(email)
         pswd = self.browser.find_element(*LoginPageLocators.PASSWORD_INPUT_FORM_FOR_REG_USER)
@@ -11,8 +12,7 @@ class LoginPage(BasePage):
         login_btn = self.browser.find_element(*LoginPageLocators.LOGIN_BTN)
         login_btn.click()
 
-
-    def register_new_user(self,email, password):
+    def register_new_user(self, email, password):
         email_form = self.browser.find_element(*LoginPageLocators.EMAIL_INPUT_FORM)
         email_form.send_keys(email)
         passwd_1 = self.browser.find_element(*LoginPageLocators.PASSWORD_INPUT_FORM)
@@ -21,7 +21,6 @@ class LoginPage(BasePage):
         passwd_2.send_keys(password)
         register_button = self.browser.find_element(*LoginPageLocators.REG_BTN)
         register_button.click()
-
 
     def should_be_login_page(self):
         self.should_be_login_url()
@@ -46,4 +45,3 @@ class LoginPage(BasePage):
     def should_be_welcome_msg(self):
         assert self.is_element_present(*AccountPageLocators.WLCM_MSG), \
             "Welcome text isn't present"
-

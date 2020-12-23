@@ -1,10 +1,6 @@
-from .pages.basket_page import BasketPage
 from .pages.login_page import LoginPage
-from .pages.product_page import ProductPage
-from .pages.base_page import BasePage
 from .pages.account_page import AccountPage
 import pytest
-import time
 
 
 class TestUserCanGoToAccountPage:
@@ -38,4 +34,4 @@ class TestUserCanGoToAccountPage:
         page.open()
         # Assert
         page.go_to_account_page()
-        page.edit_user_profile("TestFN", "TestLN")
+        page.edit_user_profile("TestFirstName", "TestLastName")

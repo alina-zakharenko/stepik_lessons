@@ -1,7 +1,5 @@
-from selenium.webdriver.common.by import By
-
 from .base_page import BasePage
-from .locators import ProductPageLocators, BasketPageLocators, AccountPageLocators
+from .locators import AccountPageLocators
 from .locators import LoginPageLocators
 
 
@@ -15,8 +13,10 @@ class AccountPage(BasePage):
         edit_btn = self.browser.find_element(*AccountPageLocators.EDIT_PROFILE_BTN)
         edit_btn.click()
         first_name = self.browser.find_element(*AccountPageLocators.FIRST_NAME)
+        first_name.clear()
         first_name.send_keys(firstname)
         last_name = self.browser.find_element(*AccountPageLocators.LAST_NAME)
+        last_name.clear()
         last_name.send_keys(lastname)
         save_button = self.browser.find_element(*AccountPageLocators.SAVE_BTN)
         save_button.click()

@@ -1,7 +1,4 @@
-from selenium.webdriver.common.by import By
-
 from .pages.basket_page import BasketPage
-from .pages.locators import BasketPageLocators
 from .pages.login_page import LoginPage
 from .pages.main_page import MainPage
 import pytest

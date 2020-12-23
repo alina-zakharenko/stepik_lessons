@@ -1,6 +1,5 @@
 import math
-import time
-
+from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.support.wait import WebDriverWait
@@ -79,3 +78,17 @@ class BasePage():
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
+
+    def check_add_to_basket_notification_from_base_page(self, expected_product_name, expected_notification_template):
+        expected_notification_text = expected_notification_template.format(expected_product_name)
+        actual_notification_text = self.browser.find_element(By.XPATH,
+                                                             "//strong[contains(text(), 'Ariel')]/parent::div").text
+        print("Actual product name is " + actual_notification_text,
+              "Expected product name is " + expected_notification_text)
+        assert actual_notification_text == expected_notification_text, "Product name isn't correct"
+
+    def check_product_and_basket_price_from_base_page(self, expected_product_price):
+        actual_product_price = self.browser.find_element(By.XPATH,
+                                                         "//div[contains(@class, 'alert-info')]/child::div/p/strong").text
+        print("Actual product price is " + actual_product_price, "Expected product price is " + expected_product_price)
+        assert actual_product_price == expected_product_price, "Product price isn't correct"
