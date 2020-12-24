@@ -3,7 +3,6 @@ from selenium.webdriver.common.by import By
 
 class AccountPageLocators():
     WLCM_MSG = (By.CSS_SELECTOR, "#messages")
-    # BASKET_INFO = (By.CSS_SELECTOR, ".basket-mini.pull-right.hidden-xs")
     PROFILE_SECTION = (By.XPATH, "//h1[text()='Profile']")
     EDIT_PROFILE_BTN = (By.CSS_SELECTOR, "[href$='/edit/']")
     FIRST_NAME = (By.CSS_SELECTOR, "#id_first_name")

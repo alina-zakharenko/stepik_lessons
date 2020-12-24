@@ -16,7 +16,7 @@ class TestProductPage:
                               "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer4",
                               "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer5",
                               "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer6",
-                              "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7"
+                              "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7",
                               "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer8",
                               "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer9"
                               ])
@@ -32,8 +32,6 @@ class TestProductPage:
                            link)  # инициализируем Page Object, передаем в конструктор экземпляр драйвера и url адрес
         # Act
         page.open()  # открываем страницу
-        # page.should_be_product_page()
-        # page.should_be_login_url()
         page.should_be_add_btn()
         page.add_to_basket()
         page.solve_quiz_and_get_code()
@@ -122,7 +120,6 @@ class TestUserAddToBasketFromProductPage:
         page = ProductPage(browser, link)
         # Act
         page.open()  # открываем страницу
-        # page.should_be_product_page()
         page.should_be_add_btn()
         page.add_to_basket()
         # Assert
