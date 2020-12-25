@@ -28,8 +28,6 @@ def browser(request):
     browser_name = request.config.getoption("browser")
     if browser_name == "chrome":
         print("\nstart chrome browser for test..")
-        browser = webdriver.Chrome()
-        browser.maximize_window()
     else:
         print("Browser {} still is not implemented".format(browser_name))
     yield browser
